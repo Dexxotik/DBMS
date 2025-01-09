@@ -1,0 +1,46 @@
+set serveroutput on
+declare
+    sno number(3);
+    sna varchar(20);
+    s1 number(3);
+    s2 number(3);
+    s3 number(3);
+    tot number(4);
+    avg1 number(5,2);
+    resu varchar(5);
+    grade varchar(15);
+begin
+    sno := &sno;
+    sna := '&sna';
+    s1 := &s1;
+    s2 := &s2;
+    s3 := &s3;
+
+    tot := s1 + s2 + s3;
+    avg1 := tot / 3;
+
+    if (s1 >= 35 and s2 >= 35 and s3 >= 35) then
+        resu := 'pass';
+    else
+        resu := 'fail';
+        avg1 := 0;
+        grade := 'No Division';
+    end if;
+
+    if resu = 'pass' then
+        if avg1 >= 35 and avg1 < 50 then
+            grade := 'Third';
+        elsif avg1 >= 50 and avg1 <= 60 then
+            grade := 'Second';
+        elsif avg1 > 60 and avg1 < 70 then
+            grade := 'First';
+        elsif avg1 >= 70 then
+            grade := 'Distinction';
+        end if;
+    end if;
+
+    dbms_output.put_line('TOTAL MARKS....' || tot);
+    dbms_output.put_line('AVERAGE.....' || avg1);
+    dbms_output.put_line('RESULT....' || resu);
+    dbms_output.put_line('GRADE....' || grade);
+end;
